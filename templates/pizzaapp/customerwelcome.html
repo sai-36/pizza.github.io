@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">Welcome {{username}}</a>
+    <a href="/userorders/" class="navitem" style="color: black;text-decoration: none;">myorders</a>
+    <!-- <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form> -->
+    <a href="/userlogout/" class="btn btn-danger">logout</a>
+    <!-- <a class="btn btn-danger" href="/adminlogout/">logout</a> -->
+</nav>
+{% for message in messages %}
+<p style="color: green; text-align: center;">{{message}}</p>
+{% endfor %}
+<form method="post" action="/placeorder/">
+    {% csrf_token %}
+    <div class="container" style="margin: auto; width: 600px;">
+        <table style="width: 100%;">
+            <tr>
+                <th>pizza</th>
+                <th>price</th>
+                <th>quantity</th>
+            </tr>
+            {% for pizza in pizzas %}
+            <tr>
+                <td>{{pizza.name}}</td>
+                <td>{{pizza.price}}</td>
+                <td><input type="number" min="0" value="0" name={{pizza.id}} style="width: 60px;"></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <input type="text" placeholder="address" style="width: 400px;margin-top: 110px;" name="address">
+        <!-- <a href="#" style="float: right;margin: 100px;" class="btn btn-outline-success">place order</a> -->
+        <input type="submit" style="float: right;margin: 100px;"" class="btn btn-outline-success" value="place order">
+    </div>
+</form>
+{% endblock %}
